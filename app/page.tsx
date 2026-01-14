@@ -26,27 +26,6 @@ export default function Home() {
 
   useEffect(() => {
     const loadBooks = async () => {
-      // Check if we need to migrate from localStorage
-      const localStorageData = localStorage.getItem('reading-list-books');
-      if (localStorageData) {
-        try {
-          const localBooks = JSON.parse(localStorageData);
-          if (localBooks.length > 0) {
-            // Migrate localStorage data to server
-            await saveBooks(localBooks);
-            // Clear localStorage after successful migration
-            localStorage.removeItem('reading-list-books');
-            console.log(`Migrated ${localBooks.length} books from localStorage to server`);
-            setBooks(localBooks);
-            setFilteredBooks(localBooks);
-            return;
-          }
-        } catch (e) {
-          console.error('Error migrating localStorage data:', e);
-        }
-      }
-
-      // Load from server
       const storedBooks = await getBooks();
       setBooks(storedBooks);
       setFilteredBooks(storedBooks);
