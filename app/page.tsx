@@ -8,7 +8,7 @@ import { getBookMetadata } from '@/lib/bookApi';
 import { removeDuplicates, countDuplicates } from '@/lib/deduplication';
 import BookList from '@/components/BookList';
 import AddBookForm from '@/components/AddBookForm';
-import FilterBar from '@/components/FilterBar';
+import FilterBar, { DisplayMode } from '@/components/FilterBar';
 import Menu from '@/components/Menu';
 import Dashboard from '@/components/Dashboard';
 
@@ -21,6 +21,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [view, setView] = useState<'list' | 'dashboard'>('list');
+  const [displayMode, setDisplayMode] = useState<DisplayMode>('card');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -189,20 +190,7 @@ export default function Home() {
   };
 
   return (
-    <main style={{ maxWidth: '1200px', margin: '0 auto' }}>
-      <header style={{ 
-        textAlign: 'center', 
-        marginBottom: '3rem',
-        color: 'white'
-      }}>
-        <h1 style={{ fontSize: '3rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-          📚 My Reading List
-        </h1>
-        <p style={{ fontSize: '1.2rem', opacity: 0.9 }}>
-          Manage your books, track your progress, and discover new reads
-        </p>
-      </header>
-
+    <main>
       <div style={{ 
         backgroundColor: 'white', 
         borderRadius: '16px', 
@@ -218,12 +206,14 @@ export default function Home() {
           gap: '1rem'
         }}>
           {view === 'list' ? (
-            <FilterBar 
-              statusFilter={statusFilter} 
+            <FilterBar
+              statusFilter={statusFilter}
               onFilterChange={setStatusFilter}
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
               bookCount={filteredBooks.length}
+              displayMode={displayMode}
+              onDisplayModeChange={setDisplayMode}
             />
           ) : (
             <div style={{ flex: 1 }} />
@@ -276,8 +266,8 @@ export default function Home() {
               </div>
             )}
 
-            <BookList 
-              books={filteredBooks} 
+            <BookList
+              books={filteredBooks}
               onUpdateStatus={handleUpdateStatus}
               onUpdateRating={handleUpdateRating}
               onFilterByAuthor={(author) => {
@@ -286,6 +276,7 @@ export default function Home() {
                 setFormatFilter('all');
                 setRatingFilter('all');
               }}
+              displayMode={displayMode}
             />
           </>
         ) : (

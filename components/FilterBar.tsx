@@ -2,12 +2,16 @@
 
 import { ReadingStatus } from '@/types/book';
 
+export type DisplayMode = 'card' | 'list';
+
 interface FilterBarProps {
   statusFilter: ReadingStatus | 'all';
   onFilterChange: (filter: ReadingStatus | 'all') => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
   bookCount: number;
+  displayMode: DisplayMode;
+  onDisplayModeChange: (mode: DisplayMode) => void;
 }
 
 const statusOptions: Array<{ value: ReadingStatus | 'all'; label: string }> = [
@@ -18,7 +22,7 @@ const statusOptions: Array<{ value: ReadingStatus | 'all'; label: string }> = [
   { value: 'abandoned', label: 'Abandoned' },
 ];
 
-export default function FilterBar({ statusFilter, onFilterChange, searchQuery, onSearchChange, bookCount }: FilterBarProps) {
+export default function FilterBar({ statusFilter, onFilterChange, searchQuery, onSearchChange, bookCount, displayMode, onDisplayModeChange }: FilterBarProps) {
   return (
     <div style={{ 
       display: 'flex', 
@@ -122,14 +126,55 @@ export default function FilterBar({ statusFilter, onFilterChange, searchQuery, o
         </div>
       </div>
 
-      <span style={{ 
-        fontSize: '0.9rem', 
-        color: '#666',
-        fontWeight: '500',
-        whiteSpace: 'nowrap',
-      }}>
-        {bookCount} {bookCount === 1 ? 'book' : 'books'}
-      </span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <span style={{
+          fontSize: '0.9rem',
+          color: '#666',
+          fontWeight: '500',
+          whiteSpace: 'nowrap',
+        }}>
+          {bookCount} {bookCount === 1 ? 'book' : 'books'}
+        </span>
+
+        <div style={{ display: 'flex', gap: '0.25rem' }}>
+          <button
+            onClick={() => onDisplayModeChange('card')}
+            style={{
+              padding: '0.4rem 0.6rem',
+              backgroundColor: displayMode === 'card' ? '#667eea' : '#f0f0f0',
+              color: displayMode === 'card' ? 'white' : '#666',
+              border: 'none',
+              borderRadius: '4px 0 0 4px',
+              cursor: 'pointer',
+              fontSize: '0.85rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.3rem',
+            }}
+            title="Card view"
+          >
+            ▦
+          </button>
+          <button
+            onClick={() => onDisplayModeChange('list')}
+            style={{
+              padding: '0.4rem 0.6rem',
+              backgroundColor: displayMode === 'list' ? '#667eea' : '#f0f0f0',
+              color: displayMode === 'list' ? 'white' : '#666',
+              border: 'none',
+              borderRadius: '0 4px 4px 0',
+              cursor: 'pointer',
+              fontSize: '0.85rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.3rem',
+            }}
+            title="List view"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

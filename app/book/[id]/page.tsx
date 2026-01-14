@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Book, ReadingStatus } from '@/types/book';
 import { getBookById, updateBook } from '@/lib/storage';
 
@@ -20,7 +19,6 @@ const statusColors: Record<ReadingStatus, string> = {
 };
 
 export default function BookDetailPage({ params }: { params: { id: string } }) {
-  const router = useRouter();
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
@@ -61,56 +59,21 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
 
   if (!book) {
     return (
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <h1>Book not found</h1>
-        <button
-          onClick={() => router.push('/')}
-          style={{
-            marginTop: '1rem',
-            padding: '0.5rem 1rem',
-            backgroundColor: '#667eea',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            cursor: 'pointer',
-          }}
-        >
-          Back to Reading List
-        </button>
+      <div style={{
+        backgroundColor: 'white',
+        borderRadius: '12px',
+        padding: '3rem',
+        textAlign: 'center',
+      }}>
+        <h1 style={{ color: '#333', marginBottom: '0.5rem' }}>Book not found</h1>
+        <p style={{ color: '#666' }}>Click the header above to return to your reading list.</p>
       </div>
     );
   }
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#f5f5f5',
-    }}>
+    <div>
       <div style={{
-        maxWidth: '900px',
-        margin: '0 auto',
-        padding: '2rem',
-      }}>
-        <button
-          onClick={() => router.push('/')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.5rem 1rem',
-            backgroundColor: 'white',
-            border: '1px solid #ddd',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            marginBottom: '1.5rem',
-            fontSize: '0.9rem',
-            color: '#666',
-          }}
-        >
-          ← Back to Reading List
-        </button>
-
-        <div style={{
           backgroundColor: 'white',
           borderRadius: '12px',
           boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
@@ -437,7 +400,6 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
             </div>
           )}
         </div>
-      </div>
     </div>
   );
 }

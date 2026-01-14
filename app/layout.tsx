@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import Header from '@/components/Header'
 
 export const metadata: Metadata = {
   title: 'Reading List',
@@ -13,7 +14,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <Header />
+          {children}
+        </div>
+      </body>
     </html>
   )
 }
