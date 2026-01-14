@@ -1,52 +1,79 @@
 import { Book } from '@/types/book';
 
-const STORAGE_KEY = 'reading-list-books';
+const API_BASE = '/api/reading-list';
 
-export function getBooks(): Book[] {
-  if (typeof window === 'undefined') return [];
-  
+export async function getBooks(): Promise<Book[]> {
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+    const response = await fetch(API_BASE);
+    if (!response.ok) {
+      throw new Error('Failed to fetch books');
+    }
+    return await response.json();
   } catch (error) {
-    console.error('Error reading from localStorage:', error);
+    console.error('Error fetching books:', error);
     return [];
   }
 }
 
-export function saveBooks(books: Book[]): void {
-  if (typeof window === 'undefined') return;
-  
+export async function saveBooks(books: Book[]): Promise<void> {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+    const response = await fetch(`${API_BASE}/bulk`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(books),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to save books');
+    }
   } catch (error) {
-    console.error('Error saving to localStorage:', error);
+    console.error('Error saving books:', error);
   }
 }
 
-export function addBook(book: Book): void {
-  const books = getBooks();
-  books.push(book);
-  saveBooks(books);
-}
-
-export function updateBook(id: string, updates: Partial<Book>): void {
-  const books = getBooks();
-  const index = books.findIndex(b => b.id === id);
-  
-  if (index !== -1) {
-    books[index] = { ...books[index], ...updates };
-    saveBooks(books);
+export async function addBook(book: Book): Promise<void> {
+  try {
+    const response = await fetch(API_BASE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(book),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to add book');
+    }
+  } catch (error) {
+    console.error('Error adding book:', error);
   }
 }
 
-export function deleteBook(id: string): void {
-  const books = getBooks();
-  const filtered = books.filter(b => b.id !== id);
-  saveBooks(filtered);
+export async function updateBook(id: string, updates: Partial<Book>): Promise<void> {
+  try {
+    const response = await fetch(API_BASE, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, updates }),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to update book');
+    }
+  } catch (error) {
+    console.error('Error updating book:', error);
+  }
 }
 
-export function getBookById(id: string): Book | undefined {
-  const books = getBooks();
+export async function deleteBook(id: string): Promise<void> {
+  try {
+    const response = await fetch(`${API_BASE}?id=${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete book');
+    }
+  } catch (error) {
+    console.error('Error deleting book:', error);
+  }
+}
+
+export async function getBookById(id: string): Promise<Book | undefined> {
+  const books = await getBooks();
   return books.find(b => b.id === id);
 }

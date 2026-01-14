@@ -24,12 +24,15 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
 
   useEffect(() => {
-    const foundBook = getBookById(params.id);
-    setBook(foundBook || null);
-    setLoading(false);
+    const loadBook = async () => {
+      const foundBook = await getBookById(params.id);
+      setBook(foundBook || null);
+      setLoading(false);
+    };
+    loadBook();
   }, [params.id]);
 
-  const handleStatusChange = (status: ReadingStatus) => {
+  const handleStatusChange = async (status: ReadingStatus) => {
     if (!book) return;
     const updates: Partial<Book> = { status };
     if (status === 'currently-reading' && !book.dateStarted) {
@@ -38,14 +41,14 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
     if (status === 'finished' && !book.dateFinished) {
       updates.dateFinished = new Date().toISOString();
     }
-    updateBook(book.id, updates);
+    await updateBook(book.id, updates);
     setBook({ ...book, ...updates });
   };
 
-  const handleRatingClick = (rating: number) => {
+  const handleRatingClick = async (rating: number) => {
     if (!book) return;
     const newRating = book.rating === rating ? undefined : rating;
-    updateBook(book.id, { rating: newRating });
+    await updateBook(book.id, { rating: newRating });
     setBook({ ...book, rating: newRating });
   };
 

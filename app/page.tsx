@@ -25,9 +25,33 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const storedBooks = getBooks();
-    setBooks(storedBooks);
-    setFilteredBooks(storedBooks);
+    const loadBooks = async () => {
+      // Check if we need to migrate from localStorage
+      const localStorageData = localStorage.getItem('reading-list-books');
+      if (localStorageData) {
+        try {
+          const localBooks = JSON.parse(localStorageData);
+          if (localBooks.length > 0) {
+            // Migrate localStorage data to server
+            await saveBooks(localBooks);
+            // Clear localStorage after successful migration
+            localStorage.removeItem('reading-list-books');
+            console.log(`Migrated ${localBooks.length} books from localStorage to server`);
+            setBooks(localBooks);
+            setFilteredBooks(localBooks);
+            return;
+          }
+        } catch (e) {
+          console.error('Error migrating localStorage data:', e);
+        }
+      }
+
+      // Load from server
+      const storedBooks = await getBooks();
+      setBooks(storedBooks);
+      setFilteredBooks(storedBooks);
+    };
+    loadBooks();
   }, []);
 
   useEffect(() => {
@@ -118,7 +142,7 @@ export default function Home() {
     }
     
     setBooks(deduplicatedBooks);
-    saveBooks(deduplicatedBooks);
+    await saveBooks(deduplicatedBooks);
     setLoading(false);
   };
 
@@ -138,14 +162,13 @@ export default function Home() {
       ...bookData,
     };
 
-    const updatedBooks = [...books, newBook];
-    setBooks(updatedBooks);
-    saveBooks(updatedBooks);
+    await addBook(newBook);
+    setBooks([...books, newBook]);
     setShowAddForm(false);
     setLoading(false);
   };
 
-  const handleUpdateStatus = (id: string, status: ReadingStatus) => {
+  const handleUpdateStatus = async (id: string, status: ReadingStatus) => {
     const updates: Partial<Book> = { status };
     
     if (status === 'currently-reading' && !books.find(b => b.id === id)?.dateStarted) {
@@ -156,26 +179,26 @@ export default function Home() {
       updates.dateFinished = new Date().toISOString();
     }
 
-    updateBook(id, updates);
-    const updatedBooks = books.map(b => 
+    await updateBook(id, updates);
+    const updatedBooks = books.map(b =>
       b.id === id ? { ...b, ...updates } : b
     );
     setBooks(updatedBooks);
     // Don't set filteredBooks here - let the useEffect handle filtering
   };
 
-  const handleUpdateRating = (id: string, rating: number | undefined) => {
+  const handleUpdateRating = async (id: string, rating: number | undefined) => {
     const updates: Partial<Book> = { rating };
-    updateBook(id, updates);
-    const updatedBooks = books.map(b => 
+    await updateBook(id, updates);
+    const updatedBooks = books.map(b =>
       b.id === id ? { ...b, ...updates } : b
     );
     setBooks(updatedBooks);
   };
 
-  const handleRemoveDuplicates = () => {
+  const handleRemoveDuplicates = async () => {
     const duplicateCount = countDuplicates(books);
-    
+
     if (duplicateCount === 0) {
       alert('No duplicates found in your reading list!');
       return;
@@ -184,7 +207,7 @@ export default function Home() {
     if (confirm(`Found ${duplicateCount} duplicate book${duplicateCount > 1 ? 's' : ''}. Remove them?`)) {
       const deduplicatedBooks = removeDuplicates(books);
       setBooks(deduplicatedBooks);
-      saveBooks(deduplicatedBooks);
+      await saveBooks(deduplicatedBooks);
       alert(`Removed ${duplicateCount} duplicate book${duplicateCount > 1 ? 's' : ''}!`);
     }
   };
