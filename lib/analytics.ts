@@ -59,6 +59,29 @@ export function calculateReadingStats(books: Book[]): ReadingStats {
     recentFinishes: [],
   };
 
+  // Reading timeline (last 12 months) - generate even for empty arrays
+  const timelineMap = new Map<string, number>();
+  const months: string[] = [];
+
+  for (let i = 11; i >= 0; i--) {
+    const date = new Date();
+    date.setMonth(date.getMonth() - i);
+    const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    const monthLabel = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    months.push(monthLabel);
+    timelineMap.set(monthKey, 0);
+  }
+
+  stats.readingTimeline = months.map((month, index) => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - (11 - index));
+    const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    return {
+      month,
+      count: timelineMap.get(monthKey) || 0,
+    };
+  });
+
   if (books.length === 0) return stats;
 
   // Count by status and format
@@ -143,37 +166,21 @@ export function calculateReadingStats(books: Book[]): ReadingStats {
     .sort((a, b) => b.count - a.count)
     .slice(0, 5);
 
-  // Reading timeline (last 12 months)
-  const timelineMap = new Map<string, number>();
-  const months: string[] = [];
-  
-  for (let i = 11; i >= 0; i--) {
-    const date = new Date();
-    date.setMonth(date.getMonth() - i);
-    const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-    const monthLabel = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-    months.push(monthLabel);
-    timelineMap.set(monthKey, 0);
-  }
-
+  // Update reading timeline counts from books
   books.forEach(book => {
     if (book.dateFinished) {
       const finishedDate = new Date(book.dateFinished);
       const monthKey = `${finishedDate.getFullYear()}-${String(finishedDate.getMonth() + 1).padStart(2, '0')}`;
-      if (timelineMap.has(monthKey)) {
-        timelineMap.set(monthKey, (timelineMap.get(monthKey) || 0) + 1);
+      const timelineEntry = stats.readingTimeline.find((_, index) => {
+        const date = new Date();
+        date.setMonth(date.getMonth() - (11 - index));
+        const entryKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        return entryKey === monthKey;
+      });
+      if (timelineEntry) {
+        timelineEntry.count++;
       }
     }
-  });
-
-  stats.readingTimeline = months.map((month, index) => {
-    const date = new Date();
-    date.setMonth(date.getMonth() - (11 - index));
-    const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-    return {
-      month,
-      count: timelineMap.get(monthKey) || 0,
-    };
   });
 
   // Recent finishes (last 5)

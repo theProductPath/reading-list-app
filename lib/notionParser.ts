@@ -183,12 +183,13 @@ function parseCSVLine(line: string): string[] {
 
 function mapStatus(status: string): ReadingStatus {
   const statusLower = status.toLowerCase().trim();
-  
-  if (statusLower.includes('finished') || statusLower.includes('read') || statusLower === 'done') {
-    return 'finished';
-  }
+
+  // Check for "currently reading" or "reading" before checking for "read"
   if (statusLower.includes('reading') || statusLower.includes('current')) {
     return 'currently-reading';
+  }
+  if (statusLower.includes('finished') || statusLower === 'read' || statusLower === 'done') {
+    return 'finished';
   }
   if (statusLower.includes('abandoned') || statusLower.includes('dropped') || statusLower.includes('quit')) {
     return 'abandoned';
