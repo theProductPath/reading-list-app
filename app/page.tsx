@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Book, ReadingStatus, BookFormat } from '@/types/book';
-import { getBooks, saveBooks, addBook, updateBook } from '@/lib/storage';
+import { getBooks, saveBooks, addBook, updateBook, deleteBook } from '@/lib/storage';
 import { parseNotionCSV, parseNotionMarkdown } from '@/lib/notionParser';
 import { getBookMetadata } from '@/lib/bookApi';
 import { removeDuplicates, countDuplicates } from '@/lib/deduplication';
@@ -175,6 +175,19 @@ export default function Home() {
     setBooks(updatedBooks);
   };
 
+  const handleDeleteBook = async (id: string) => {
+    const book = books.find(b => b.id === id);
+    if (!book) return;
+
+    if (!confirm(`Are you sure you want to delete "${book.title}"?`)) {
+      return;
+    }
+
+    await deleteBook(id);
+    const updatedBooks = books.filter(b => b.id !== id);
+    setBooks(updatedBooks);
+  };
+
   const handleRemoveDuplicates = async () => {
     const duplicateCount = countDuplicates(books);
 
@@ -272,6 +285,7 @@ export default function Home() {
               books={filteredBooks}
               onUpdateStatus={handleUpdateStatus}
               onUpdateRating={handleUpdateRating}
+              onDelete={handleDeleteBook}
               onFilterByAuthor={(author) => {
                 setSearchQuery(author);
                 setStatusFilter('all');

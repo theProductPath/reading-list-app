@@ -9,6 +9,7 @@ interface BookListProps {
   books: Book[];
   onUpdateStatus: (id: string, status: ReadingStatus) => void;
   onUpdateRating?: (id: string, rating: number | undefined) => void;
+  onDelete?: (id: string) => void;
   onFilterByAuthor?: (author: string) => void;
   displayMode?: DisplayMode;
 }
@@ -27,7 +28,7 @@ const statusColors: Record<ReadingStatus, string> = {
   'abandoned': '#f44336',
 };
 
-export default function BookList({ books, onUpdateStatus, onUpdateRating, onFilterByAuthor, displayMode = 'card' }: BookListProps) {
+export default function BookList({ books, onUpdateStatus, onUpdateRating, onDelete, onFilterByAuthor, displayMode = 'card' }: BookListProps) {
   const router = useRouter();
 
   if (books.length === 0) {
@@ -51,7 +52,7 @@ export default function BookList({ books, onUpdateStatus, onUpdateRating, onFilt
         {/* Header row */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '50px 1fr 150px 120px 100px',
+          gridTemplateColumns: '50px 1fr 150px 120px 100px 50px',
           gap: '1rem',
           padding: '0.75rem 1rem',
           backgroundColor: '#f5f5f5',
@@ -65,6 +66,7 @@ export default function BookList({ books, onUpdateStatus, onUpdateRating, onFilt
           <div>Status</div>
           <div>Rating</div>
           <div>Format</div>
+          <div></div>
         </div>
 
         {/* Book rows */}
@@ -74,7 +76,7 @@ export default function BookList({ books, onUpdateStatus, onUpdateRating, onFilt
             onClick={() => router.push(`/book/${book.id}`)}
             style={{
               display: 'grid',
-              gridTemplateColumns: '50px 1fr 150px 120px 100px',
+              gridTemplateColumns: '50px 1fr 150px 120px 100px 50px',
               gap: '1rem',
               padding: '0.75rem 1rem',
               backgroundColor: '#fafafa',
@@ -173,6 +175,33 @@ export default function BookList({ books, onUpdateStatus, onUpdateRating, onFilt
                book.format === 'ebook' ? '📱 eBook' :
                book.format === 'audiobook' ? '🎧 Audio' : '—'}
             </div>
+
+            {/* Delete */}
+            <div onClick={(e) => e.stopPropagation()}>
+              {onDelete && (
+                <button
+                  onClick={() => onDelete(book.id)}
+                  title="Delete book"
+                  style={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    padding: '0.25rem',
+                    cursor: 'pointer',
+                    fontSize: '1rem',
+                    opacity: 0.5,
+                    transition: 'opacity 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.opacity = '1';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.opacity = '0.5';
+                  }}
+                >
+                  🗑️
+                </button>
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -191,6 +220,7 @@ export default function BookList({ books, onUpdateStatus, onUpdateRating, onFilt
           book={book}
           onUpdateStatus={onUpdateStatus}
           onUpdateRating={onUpdateRating}
+          onDelete={onDelete}
           onFilterByAuthor={onFilterByAuthor}
         />
       ))}

@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Book, ReadingStatus } from '@/types/book';
-import { getBookById, updateBook } from '@/lib/storage';
+import { getBookById, updateBook, deleteBook } from '@/lib/storage';
 
 const statusLabels: Record<ReadingStatus, string> = {
   'want-to-read': 'Want to Read',
@@ -19,6 +20,7 @@ const statusColors: Record<ReadingStatus, string> = {
 };
 
 export default function BookDetailPage({ params }: { params: { id: string } }) {
+  const router = useRouter();
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
@@ -50,6 +52,15 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
     const newRating = book.rating === rating ? undefined : rating;
     await updateBook(book.id, { rating: newRating });
     setBook({ ...book, rating: newRating });
+  };
+
+  const handleDelete = async () => {
+    if (!book) return;
+    if (!confirm(`Are you sure you want to delete "${book.title}"?`)) {
+      return;
+    }
+    await deleteBook(book.id);
+    router.push('/');
   };
 
   if (loading) {
@@ -402,6 +413,36 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
               </a>
             </div>
           )}
+
+          <div style={{
+            padding: '0 2rem 2rem 2rem',
+            borderTop: '1px solid #eee',
+            paddingTop: '1.5rem',
+          }}>
+            <button
+              onClick={handleDelete}
+              style={{
+                backgroundColor: 'transparent',
+                border: '1px solid #f44336',
+                color: '#f44336',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '6px',
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s, color 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#f44336';
+                e.currentTarget.style.color = 'white';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = '#f44336';
+              }}
+            >
+              Delete Book
+            </button>
+          </div>
         </div>
     </div>
   );
