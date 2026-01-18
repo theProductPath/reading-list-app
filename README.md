@@ -127,6 +127,80 @@ npm run build
 npm start
 ```
 
+## Server Deployment with PM2
+
+### Initial Setup
+
+1. Pull the latest code from GitHub:
+```bash
+git pull origin main
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Build the production version:
+```bash
+npm run build
+```
+
+4. Start with PM2:
+```bash
+pm2 start npm --name "reading-list-app" -- start
+pm2 save
+```
+
+### Deploying Updates
+
+When deploying updates to your server, follow these steps:
+
+1. Pull the latest code:
+```bash
+git pull origin main
+```
+
+2. Install any new dependencies:
+```bash
+npm install
+```
+
+3. Build the updated application:
+```bash
+npm run build
+```
+
+4. Restart PM2:
+```bash
+# Option 1: Standard restart (stops then starts the app)
+pm2 restart reading-list-app
+
+# Option 2: Reload with zero-downtime (recommended for production)
+pm2 reload reading-list-app
+
+# Option 3: Clean restart (delete and recreate the process)
+pm2 delete reading-list-app
+pm2 start npm --name "reading-list-app" -- start
+pm2 save
+```
+
+### Useful PM2 Commands
+
+- **View all processes**: `pm2 list`
+- **View logs**: `pm2 logs reading-list-app`
+- **View detailed info**: `pm2 show reading-list-app`
+- **Monitor in real-time**: `pm2 monit`
+- **Stop the app**: `pm2 stop reading-list-app`
+- **Delete the app**: `pm2 delete reading-list-app`
+
+### Differences Between Restart and Reload
+
+- **`pm2 restart`**: Stops and starts the application (brief downtime)
+- **`pm2 reload`**: Zero-downtime restart (seamlessly switches to new version)
+
+For production deployments, use `pm2 reload` to avoid any service interruption.
+
 ## Future Enhancements
 
 Potential features to add:
