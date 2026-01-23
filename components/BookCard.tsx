@@ -10,6 +10,7 @@ interface BookCardProps {
   onUpdateRating?: (id: string, rating: number | undefined) => void;
   onDelete?: (id: string) => void;
   onFilterByAuthor?: (author: string) => void;
+  onFilterByGenre?: (genre: string) => void;
 }
 
 const statusLabels: Record<ReadingStatus, string> = {
@@ -26,7 +27,7 @@ const statusColors: Record<ReadingStatus, string> = {
   'abandoned': '#f44336',
 };
 
-export default function BookCard({ book, onUpdateStatus, onUpdateRating, onDelete, onFilterByAuthor }: BookCardProps) {
+export default function BookCard({ book, onUpdateStatus, onUpdateRating, onDelete, onFilterByAuthor, onFilterByGenre }: BookCardProps) {
   const router = useRouter();
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
 
@@ -83,15 +84,29 @@ export default function BookCard({ book, onUpdateStatus, onUpdateRating, onDelet
           <div style={{
             width: '100%',
             height: '200px',
-            backgroundColor: '#e0e0e0',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             borderRadius: '8px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#999',
+            color: 'white',
             fontSize: '3rem',
+            fontWeight: 'bold',
+            boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.1)',
+            position: 'relative',
+            overflow: 'hidden',
           }}>
-            📚
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              opacity: 0.1,
+              backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px)',
+              backgroundSize: '50px 50px',
+            }} />
+            <span style={{ position: 'relative', zIndex: 1 }}>📖</span>
           </div>
         )}
       </div>
@@ -151,6 +166,40 @@ export default function BookCard({ book, onUpdateStatus, onUpdateRating, onDelet
             {book.format === 'book' ? '📖 Book' : 
              book.format === 'ebook' ? '📱 eBook' : '🎧 Audio Book'}
           </span>
+        </div>
+      )}
+
+      {book.genres && book.genres.length > 0 && (
+        <div style={{ marginBottom: '1rem', display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+          {book.genres.map((genre) => (
+            <span
+              key={genre}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onFilterByGenre) {
+                  onFilterByGenre(genre);
+                }
+              }}
+              style={{
+                fontSize: '0.75rem',
+                padding: '0.25rem 0.6rem',
+                borderRadius: '12px',
+                backgroundColor: '#667eea15',
+                color: '#667eea',
+                fontWeight: '500',
+                cursor: onFilterByGenre ? 'pointer' : 'default',
+                transition: 'background-color 0.2s',
+              }}
+              onMouseEnter={onFilterByGenre ? (e) => {
+                e.currentTarget.style.backgroundColor = '#667eea30';
+              } : undefined}
+              onMouseLeave={onFilterByGenre ? (e) => {
+                e.currentTarget.style.backgroundColor = '#667eea15';
+              } : undefined}
+            >
+              {genre}
+            </span>
+          ))}
         </div>
       )}
 
@@ -313,7 +362,36 @@ export default function BookCard({ book, onUpdateStatus, onUpdateRating, onDelet
             {book.genres && book.genres.length > 0 && (
               <div>
                 <span style={{ fontWeight: '500', color: '#333' }}>Genres: </span>
-                <span style={{ color: '#666' }}>{book.genres.join(', ')}</span>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.25rem' }}>
+                  {book.genres.map((genre) => (
+                    <span
+                      key={genre}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onFilterByGenre) {
+                          onFilterByGenre(genre);
+                        }
+                      }}
+                      style={{
+                        padding: '0.25rem 0.65rem',
+                        backgroundColor: '#667eea15',
+                        color: '#667eea',
+                        borderRadius: '20px',
+                        fontSize: '0.8rem',
+                        cursor: onFilterByGenre ? 'pointer' : 'default',
+                        transition: 'background-color 0.2s',
+                      }}
+                      onMouseEnter={onFilterByGenre ? (e) => {
+                        e.currentTarget.style.backgroundColor = '#667eea30';
+                      } : undefined}
+                      onMouseLeave={onFilterByGenre ? (e) => {
+                        e.currentTarget.style.backgroundColor = '#667eea15';
+                      } : undefined}
+                    >
+                      {genre}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
             {book.dateAdded && (

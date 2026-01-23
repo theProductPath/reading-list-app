@@ -11,6 +11,7 @@ interface BookListProps {
   onUpdateRating?: (id: string, rating: number | undefined) => void;
   onDelete?: (id: string) => void;
   onFilterByAuthor?: (author: string) => void;
+  onFilterByGenre?: (genre: string) => void;
   displayMode?: DisplayMode;
 }
 
@@ -28,7 +29,7 @@ const statusColors: Record<ReadingStatus, string> = {
   'abandoned': '#f44336',
 };
 
-export default function BookList({ books, onUpdateStatus, onUpdateRating, onDelete, onFilterByAuthor, displayMode = 'card' }: BookListProps) {
+export default function BookList({ books, onUpdateStatus, onUpdateRating, onDelete, onFilterByAuthor, onFilterByGenre, displayMode = 'card' }: BookListProps) {
   const router = useRouter();
 
   if (books.length === 0) {
@@ -109,14 +110,16 @@ export default function BookList({ books, onUpdateStatus, onUpdateRating, onDele
                 <div style={{
                   width: '40px',
                   height: '55px',
-                  backgroundColor: '#e0e0e0',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   borderRadius: '4px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1.2rem',
+                  fontSize: '1rem',
+                  color: 'white',
+                  fontWeight: 'bold',
                 }}>
-                  📚
+                  📖
                 </div>
               )}
             </div>
@@ -126,9 +129,43 @@ export default function BookList({ books, onUpdateStatus, onUpdateRating, onDele
               <div style={{ fontWeight: '500', color: '#333', marginBottom: '0.2rem' }}>
                 {book.title}
               </div>
-              <div style={{ fontSize: '0.85rem', color: '#666' }}>
+              <div style={{ fontSize: '0.85rem', color: '#666', marginBottom: '0.3rem' }}>
                 {book.author}
               </div>
+              {book.genres && book.genres.length > 0 && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
+                  {book.genres.map((genre) => (
+                    <span
+                      key={genre}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onFilterByGenre) {
+                          onFilterByGenre(genre);
+                        }
+                      }}
+                      style={{
+                        fontSize: '0.7rem',
+                        padding: '0.2rem 0.45rem',
+                        borderRadius: '10px',
+                        backgroundColor: '#667eea15',
+                        color: '#667eea',
+                        fontWeight: '500',
+                        cursor: onFilterByGenre ? 'pointer' : 'default',
+                        transition: 'background-color 0.2s',
+                        display: 'inline-block',
+                      }}
+                      onMouseEnter={onFilterByGenre ? (e) => {
+                        e.currentTarget.style.backgroundColor = '#667eea30';
+                      } : undefined}
+                      onMouseLeave={onFilterByGenre ? (e) => {
+                        e.currentTarget.style.backgroundColor = '#667eea15';
+                      } : undefined}
+                    >
+                      {genre}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Status */}
@@ -222,6 +259,7 @@ export default function BookList({ books, onUpdateStatus, onUpdateRating, onDele
           onUpdateRating={onUpdateRating}
           onDelete={onDelete}
           onFilterByAuthor={onFilterByAuthor}
+          onFilterByGenre={onFilterByGenre}
         />
       ))}
     </div>

@@ -87,6 +87,24 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
 
   return (
     <div>
+      <button
+        onClick={() => router.back()}
+        style={{
+          marginBottom: '1rem',
+          padding: '0.5rem 1rem',
+          backgroundColor: '#667eea',
+          color: 'white',
+          border: 'none',
+          borderRadius: '6px',
+          cursor: 'pointer',
+          fontSize: '0.95rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+        }}
+      >
+        ← Back to List
+      </button>
       <div style={{
           backgroundColor: 'white',
           borderRadius: '12px',
@@ -117,14 +135,29 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
                 <div style={{
                   width: '200px',
                   height: '300px',
-                  backgroundColor: '#e0e0e0',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   borderRadius: '8px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '4rem',
+                  fontSize: '3.5rem',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(0, 0, 0, 0.1)',
+                  position: 'relative',
+                  overflow: 'hidden',
                 }}>
-                  📚
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    opacity: 0.1,
+                    backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px)',
+                    backgroundSize: '50px 50px',
+                  }} />
+                  <span style={{ position: 'relative', zIndex: 1 }}>📖</span>
                 </div>
               )}
             </div>
@@ -344,12 +377,24 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
                 {book.genres.map((genre, index) => (
                   <span
                     key={index}
+                    onClick={() => {
+                      // Store the genre filter in URL search params and navigate back
+                      router.push(`/?genreFilter=${encodeURIComponent(genre)}`);
+                    }}
                     style={{
                       padding: '0.35rem 0.75rem',
                       backgroundColor: '#667eea15',
                       color: '#667eea',
                       borderRadius: '20px',
                       fontSize: '0.85rem',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.2s',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#667eea30';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#667eea15';
                     }}
                   >
                     {genre}

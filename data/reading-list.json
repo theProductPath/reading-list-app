@@ -13,7 +13,8 @@
     ],
     "isbn": "9780679423904",
     "dateFinished": "2024-04-30T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "book"
   },
   {
     "id": "1768341388328-gonin6pyy",
@@ -28,7 +29,8 @@
       "Fiction"
     ],
     "isbn": "9780679728757",
-    "rating": 4
+    "rating": 4,
+    "format": "book"
   },
   {
     "id": "1768341388328-sle5l4h74",
@@ -43,7 +45,8 @@
       "Nature"
     ],
     "isbn": "9780345326492",
-    "rating": 5
+    "rating": 5,
+    "format": "book"
   },
   {
     "id": "1768341388328-eyoxsh10r",
@@ -59,7 +62,8 @@
     ],
     "isbn": "9780393069198",
     "dateFinished": "2024-09-18T05:00:00.000Z",
-    "rating": 2
+    "rating": 2,
+    "format": "audiobook"
   },
   {
     "id": "1768341388328-d4qqthazx",
@@ -73,7 +77,8 @@
     "genres": [
       "Biography & Autobiography"
     ],
-    "isbn": "9780679740247"
+    "isbn": "9780679740247",
+    "format": "book"
   },
   {
     "id": "1768341388328-3mb2b6b5n",
@@ -87,7 +92,8 @@
     "genres": [
       "Poetry"
     ],
-    "isbn": "9781582436968"
+    "isbn": "9781582436968",
+    "format": "book"
   },
   {
     "id": "1768341388328-6aqeaxo5w",
@@ -101,7 +107,8 @@
     "genres": [
       "Fiction"
     ],
-    "isbn": "9781101872765"
+    "isbn": "9781101872765",
+    "format": "book"
   },
   {
     "id": "1768341388328-5pg4byjhk",
@@ -115,7 +122,8 @@
     "genres": [
       "Literary Collections"
     ],
-    "isbn": "9781458756701"
+    "isbn": "9781458756701",
+    "format": "book"
   },
   {
     "id": "1768341388328-2pt76vwf5",
@@ -130,7 +138,8 @@
       "Fiction"
     ],
     "isbn": "9780795317453",
-    "rating": 3
+    "rating": 3,
+    "format": "book"
   },
   {
     "id": "1768341388328-9hma8y4c6",
@@ -139,7 +148,8 @@
     "status": "want-to-read",
     "coverUrl": "http://books.google.com/books/content?id=ELpjDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
     "pageCount": 222,
-    "isbn": "9780816537914"
+    "isbn": "9780816537914",
+    "format": "book"
   },
   {
     "id": "1768341388328-yy3diu0hz",
@@ -155,7 +165,8 @@
     ],
     "isbn": "9780140053203",
     "dateFinished": "2024-07-28T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "book"
   },
   {
     "id": "1768341388328-0djz5p9gf",
@@ -171,7 +182,8 @@
     ],
     "isbn": "9781439195260",
     "dateFinished": "2024-07-21T05:00:00.000Z",
-    "rating": 5
+    "rating": 5,
+    "format": "book"
   },
   {
     "id": "1768341388328-p4j0mq5ri",
@@ -187,7 +199,8 @@
     ],
     "isbn": "9780767916417",
     "dateFinished": "2024-09-02T05:00:00.000Z",
-    "rating": 4
+    "rating": 4,
+    "format": "audiobook"
   },
   {
     "id": "1768341388328-gt0c45bd5",
@@ -203,7 +216,8 @@
     ],
     "isbn": "9783736819498",
     "dateFinished": "2024-05-01T05:00:00.000Z",
-    "rating": 4
+    "rating": 4,
+    "format": "audiobook"
   },
   {
     "id": "1768341388328-qs7k3xu50",
@@ -219,7 +233,8 @@
     ],
     "isbn": "9780385674553",
     "dateFinished": "2024-06-12T05:00:00.000Z",
-    "rating": 2
+    "rating": 2,
+    "format": "audiobook"
   },
   {
     "id": "1768341388328-4y5hldqc4",
@@ -235,7 +250,8 @@
     ],
     "isbn": "9780748109951",
     "dateFinished": "2024-07-14T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "audiobook"
   },
   {
     "id": "1768341388328-hs4gnxpcm",
@@ -251,7 +267,8 @@
     ],
     "isbn": "9780679647423",
     "dateFinished": "2024-07-01T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "book"
   },
   {
     "id": "1768341388328-34ug0auih",
@@ -263,7 +280,8 @@
     "publishedDate": "2015-08-11",
     "isbn": "1473619807",
     "dateFinished": "2024-08-06T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "audiobook"
   },
   {
     "id": "1768341388328-4e78qn8h4",
@@ -279,7 +297,8 @@
     ],
     "isbn": "0553380648",
     "dateFinished": "2024-07-15T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "ebook"
   },
   {
     "id": "1768341388328-ezbim83lk",
@@ -295,7 +314,8 @@
     ],
     "isbn": "9798217299461",
     "dateFinished": "2024-06-03T05:00:00.000Z",
-    "rating": 4
+    "rating": 4,
+    "format": "ebook"
   },
   {
     "id": "1768341388328-o8s2xr20s",
@@ -310,7 +330,8 @@
       "Fiction"
     ],
     "isbn": "0807130087",
-    "rating": 5
+    "rating": 5,
+    "format": "book"
   },
   {
     "id": "1768341388328-0prp7yhod",
@@ -326,7 +347,8 @@
     ],
     "isbn": "9780140042528",
     "dateFinished": "2024-06-12T05:00:00.000Z",
-    "rating": 2
+    "rating": 2,
+    "format": "book"
   },
   {
     "id": "1768341388328-kgmnlh13a",
@@ -342,7 +364,8 @@
     ],
     "isbn": "1590171144",
     "dateFinished": "2024-04-25T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "book"
   },
   {
     "id": "1768341388328-2fspu9tjz",
@@ -358,7 +381,8 @@
     ],
     "isbn": "9780142401118",
     "dateFinished": "2024-06-05T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "book"
   },
   {
     "id": "1768341388328-eomjw1m2n",
@@ -374,7 +398,8 @@
     ],
     "isbn": "9781101984703",
     "dateFinished": "2024-05-16T05:00:00.000Z",
-    "rating": 2
+    "rating": 2,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-uy45294v8",
@@ -390,7 +415,8 @@
     ],
     "isbn": "9780593296905",
     "dateFinished": "2024-04-11T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-d8ze03fi3",
@@ -405,7 +431,8 @@
       "Fiction"
     ],
     "isbn": "9780553288100",
-    "rating": 2
+    "rating": 2,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-k9vvwps7c",
@@ -421,7 +448,8 @@
     ],
     "isbn": "9781250297204",
     "dateFinished": "2024-09-14T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-nilmkyz0c",
@@ -437,7 +465,8 @@
     ],
     "isbn": "9780679603313",
     "dateFinished": "2024-10-06T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "book"
   },
   {
     "id": "1768341388329-z4wjwosrs",
@@ -453,7 +482,8 @@
     ],
     "isbn": "9788726646108",
     "dateFinished": "2024-08-19T05:00:00.000Z",
-    "rating": 2
+    "rating": 2,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-rm0ihzp1b",
@@ -469,7 +499,8 @@
     ],
     "isbn": "9780375420528",
     "dateFinished": "2024-05-13T05:00:00.000Z",
-    "rating": 2
+    "rating": 2,
+    "format": "book"
   },
   {
     "id": "1768341388329-jdemcxi1h",
@@ -484,7 +515,8 @@
       "Biography & Autobiography"
     ],
     "isbn": "9781439143643",
-    "rating": 2
+    "rating": 2,
+    "format": "book"
   },
   {
     "id": "1768341388329-iome5brd3",
@@ -500,7 +532,8 @@
     ],
     "isbn": "9780679728740",
     "dateFinished": "2024-08-04T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "book"
   },
   {
     "id": "1768341388329-wafzcx88x",
@@ -516,7 +549,8 @@
     ],
     "isbn": "9781529036060",
     "dateFinished": "2024-09-07T05:00:00.000Z",
-    "rating": 2
+    "rating": 2,
+    "format": "ebook"
   },
   {
     "id": "1768341388329-nuddv2v66",
@@ -530,7 +564,8 @@
     "genres": [
       "Nature"
     ],
-    "rating": 1
+    "rating": 1,
+    "format": "book"
   },
   {
     "id": "1768341388329-qe4u8cpww",
@@ -545,7 +580,8 @@
       "Nature"
     ],
     "isbn": "9780899976945",
-    "rating": 2
+    "rating": 2,
+    "format": "book"
   },
   {
     "id": "1768341388329-1gts1d8ok",
@@ -559,7 +595,8 @@
     "genres": [
       "Business & Economics"
     ],
-    "isbn": "9781780520223"
+    "isbn": "9781780520223",
+    "format": "ebook"
   },
   {
     "id": "1768341388329-5rl5r851x",
@@ -573,7 +610,8 @@
     "genres": [
       "Business & Economics"
     ],
-    "isbn": "9781119691327"
+    "isbn": "9781119691327",
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-8c5b5i9rs",
@@ -587,7 +625,8 @@
     "genres": [
       "Business & Economics"
     ],
-    "isbn": "9781603587969"
+    "isbn": "9781603587969",
+    "format": "ebook"
   },
   {
     "id": "1768341388329-fl5yywciw",
@@ -601,7 +640,8 @@
     "genres": [
       "Social Science"
     ],
-    "isbn": "9780393069228"
+    "isbn": "9780393069228",
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-kqi553aje",
@@ -616,7 +656,8 @@
       "Fiction"
     ],
     "isbn": "9781439126370",
-    "rating": 4
+    "rating": 4,
+    "format": "book"
   },
   {
     "id": "1768341388329-gwies6hx7",
@@ -632,7 +673,8 @@
     ],
     "isbn": "0783815107",
     "dateFinished": "2025-03-03T06:00:00.000Z",
-    "rating": 4
+    "rating": 4,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-tp6owiw78",
@@ -648,7 +690,8 @@
     ],
     "isbn": "9780684857558",
     "dateFinished": "2024-12-25T06:00:00.000Z",
-    "rating": 4
+    "rating": 4,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-3u2ecqap7",
@@ -663,7 +706,8 @@
       "Fiction"
     ],
     "isbn": "9780593466490",
-    "rating": 2
+    "rating": 2,
+    "format": "ebook"
   },
   {
     "id": "1768341388329-c5xsve319",
@@ -679,7 +723,8 @@
     ],
     "isbn": "9798200952090",
     "dateFinished": "2024-11-25T06:00:00.000Z",
-    "rating": 4
+    "rating": 4,
+    "format": "book"
   },
   {
     "id": "1768341388329-xq1vjh8c1",
@@ -695,7 +740,8 @@
     ],
     "isbn": "9780553380163",
     "dateFinished": "2024-10-05T05:00:00.000Z",
-    "rating": 2
+    "rating": 2,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-hzl1jq570",
@@ -711,7 +757,8 @@
     ],
     "isbn": "9780593129937",
     "dateFinished": "2024-11-27T06:00:00.000Z",
-    "rating": 4
+    "rating": 4,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-3aejs3gu0",
@@ -726,7 +773,8 @@
       "Business & Economics"
     ],
     "isbn": "9781119697336",
-    "rating": 2
+    "rating": 2,
+    "format": "ebook"
   },
   {
     "id": "1768341388329-6thswyx9s",
@@ -742,7 +790,8 @@
     ],
     "isbn": "9780380789030",
     "dateFinished": "2025-03-02T06:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "book"
   },
   {
     "id": "1768341388329-32vd3q2a0",
@@ -755,7 +804,8 @@
     "publishedDate": "2022-09-13",
     "isbn": "9798985409017",
     "dateFinished": "2024-11-08T06:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "ebook"
   },
   {
     "id": "1768341388329-zzh4eju63",
@@ -770,7 +820,8 @@
       "Fiction"
     ],
     "isbn": "9780679744399",
-    "rating": 4
+    "rating": 4,
+    "format": "book"
   },
   {
     "id": "1768341388329-7w0e3zr79",
@@ -785,7 +836,8 @@
       "Fiction"
     ],
     "isbn": "9780307762467",
-    "rating": 4
+    "rating": 4,
+    "format": "book"
   },
   {
     "id": "1768341388329-1c2k10eqs",
@@ -801,7 +853,8 @@
     ],
     "isbn": "9781250386649",
     "dateFinished": "2024-12-09T06:00:00.000Z",
-    "rating": 5
+    "rating": 5,
+    "format": "book"
   },
   {
     "id": "1768341388329-f2xivzmgr",
@@ -816,7 +869,8 @@
       "Fiction"
     ],
     "isbn": "9780385333849",
-    "rating": 3
+    "rating": 3,
+    "format": "book"
   },
   {
     "id": "1768341388329-fokx9wmm8",
@@ -830,7 +884,8 @@
     "genres": [
       "Fiction"
     ],
-    "isbn": "9781631493607"
+    "isbn": "9781631493607",
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-9t0m9krc5",
@@ -843,7 +898,8 @@
     "publishedDate": "2011-11-15",
     "genres": [
       "Foreign Language Study"
-    ]
+    ],
+    "format": "book"
   },
   {
     "id": "1768341388329-amuhal723",
@@ -858,7 +914,8 @@
       "Social Science"
     ],
     "isbn": "9780735210943",
-    "rating": 2
+    "rating": 2,
+    "format": "book"
   },
   {
     "id": "1768341388329-02z65v9kj",
@@ -872,7 +929,8 @@
     "genres": [
       "Business & Economics"
     ],
-    "isbn": "9781250235381"
+    "isbn": "9781250235381",
+    "format": "ebook"
   },
   {
     "id": "1768341388329-2z1rr0ja2",
@@ -888,7 +946,8 @@
     ],
     "isbn": "9781451607741",
     "dateFinished": "2025-03-30T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "book"
   },
   {
     "id": "1768341388329-t4uv45hum",
@@ -903,7 +962,8 @@
       "Fiction"
     ],
     "isbn": "9780449134481",
-    "rating": 4
+    "rating": 4,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-0ukp9ij3t",
@@ -919,7 +979,8 @@
     ],
     "isbn": "9780061741241",
     "dateFinished": "2025-04-12T05:00:00.000Z",
-    "rating": 2
+    "rating": 2,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-x915fjsxo",
@@ -935,7 +996,8 @@
     ],
     "isbn": "9781439128145",
     "dateFinished": "2025-03-21T05:00:00.000Z",
-    "rating": 4
+    "rating": 4,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-ee5h9mz42",
@@ -951,7 +1013,8 @@
     ],
     "isbn": "9780857209450",
     "dateFinished": "2025-05-11T05:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-ghnnrjnh5",
@@ -966,7 +1029,8 @@
       "Fiction"
     ],
     "isbn": "9781631493522",
-    "rating": 3
+    "rating": 3,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-aa0ojcn7c",
@@ -982,7 +1046,8 @@
     ],
     "isbn": "0983559821",
     "dateFinished": "2025-11-23T06:00:00.000Z",
-    "rating": 2
+    "rating": 2,
+    "format": "book"
   },
   {
     "id": "1768341388329-zxyts5c8i",
@@ -997,7 +1062,8 @@
     ],
     "isbn": "9780553259728",
     "dateFinished": "2025-11-04T06:00:00.000Z",
-    "rating": 3
+    "rating": 3,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-t0ncvxwhc",
@@ -1013,7 +1079,8 @@
     ],
     "isbn": "9780525512080",
     "dateFinished": "2025-12-30T06:00:00.000Z",
-    "rating": 4
+    "rating": 4,
+    "format": "audiobook"
   },
   {
     "id": "1768341388329-c5p6h8fgj",
@@ -1029,7 +1096,8 @@
     ],
     "isbn": "9798218503130",
     "dateFinished": "2025-11-11T06:00:00.000Z",
-    "rating": 4
+    "rating": 4,
+    "format": "book"
   },
   {
     "id": "1768341388329-fh2oomjw9",
@@ -1045,7 +1113,8 @@
     ],
     "isbn": "9780374722388",
     "dateFinished": "2025-12-07T06:00:00.000Z",
-    "rating": 4
+    "rating": 4,
+    "format": "book"
   },
   {
     "id": "1768341388329-gcj2j34cf",
@@ -1060,7 +1129,8 @@
       "Fiction"
     ],
     "isbn": "9781429995207",
-    "dateFinished": "2026-01-02T06:00:00.000Z"
+    "dateFinished": "2026-01-02T06:00:00.000Z",
+    "format": "book"
   },
   {
     "id": "1768341388329-zi5ba8onn",
@@ -1075,7 +1145,8 @@
       "Fiction"
     ],
     "isbn": "9781668075104",
-    "dateStarted": "2026-01-13T22:06:03.071Z"
+    "dateStarted": "2026-01-13T22:06:03.071Z",
+    "format": "book"
   },
   {
     "id": "1768341388329-40uafnmhj",
@@ -1089,7 +1160,8 @@
     "genres": [
       "Fiction"
     ],
-    "isbn": "9780307950475"
+    "isbn": "9780307950475",
+    "format": "book"
   },
   {
     "id": "1768341388329-ebw1smt2e",
@@ -1103,7 +1175,8 @@
     "genres": [
       "Fiction"
     ],
-    "isbn": "9781668063606"
+    "isbn": "9781668063606",
+    "format": "book"
   },
   {
     "id": "1768341388329-j3xadrnnc",
@@ -1117,7 +1190,8 @@
       "Fiction"
     ],
     "isbn": "9780739342213",
-    "pageCount": 0
+    "pageCount": 0,
+    "format": "book"
   },
   {
     "id": "1768341388329-5ybh51m8f",
@@ -1125,7 +1199,8 @@
     "author": "Thomas Henry Tibbitts",
     "status": "currently-reading",
     "publishedDate": "1958",
-    "dateStarted": "2026-01-13T22:06:23.651Z"
+    "dateStarted": "2026-01-13T22:06:23.651Z",
+    "format": "book"
   },
   {
     "id": "1768341388329-gnmjgn27a",
@@ -1139,7 +1214,8 @@
     "genres": [
       "Biography & Autobiography"
     ],
-    "isbn": "9780553899085"
+    "isbn": "9780553899085",
+    "format": "book"
   },
   {
     "id": "1768341388329-8tm1jfro1",
@@ -1153,7 +1229,8 @@
     "genres": [
       "Fiction"
     ],
-    "isbn": "9780795317514"
+    "isbn": "9780795317514",
+    "format": "book"
   },
   {
     "id": "1768362079461-j2xj61gef",

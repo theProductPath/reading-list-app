@@ -7,9 +7,10 @@ interface MenuProps {
   onImport: (files: File[]) => void;
   loading: boolean;
   onRemoveDuplicates: () => void;
+  onAddBook?: () => void;
 }
 
-export default function Menu({ onImport, loading, onRemoveDuplicates }: MenuProps) {
+export default function Menu({ onImport, loading, onRemoveDuplicates, onAddBook }: MenuProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -59,7 +60,7 @@ export default function Menu({ onImport, loading, onRemoveDuplicates }: MenuProp
           }}
           aria-label="Menu"
         >
-          ☰
+          ⋮
         </button>
 
         {showMenu && (
@@ -75,6 +76,43 @@ export default function Menu({ onImport, loading, onRemoveDuplicates }: MenuProp
             zIndex: 1000,
             overflow: 'hidden',
           }}>
+            {onAddBook && (
+              <>
+                <button
+                  onClick={() => {
+                    setShowMenu(false);
+                    onAddBook();
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '0.9rem',
+                    color: '#333',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f5f5f5';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                  }}
+                >
+                  <span>➕</span>
+                  <span>Add Book</span>
+                </button>
+                <div style={{
+                  height: '1px',
+                  backgroundColor: '#e0e0e0',
+                  margin: '0.25rem 0',
+                }} />
+              </>
+            )}
             <button
               onClick={handleImportClick}
               style={{

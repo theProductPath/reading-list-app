@@ -18,6 +18,7 @@ export default function Home() {
   const [statusFilter, setStatusFilter] = useState<ReadingStatus | 'all'>('all');
   const [formatFilter, setFormatFilter] = useState<BookFormat | 'all'>('all');
   const [ratingFilter, setRatingFilter] = useState<number | 'all'>('all');
+  const [genreFilter, setGenreFilter] = useState<string | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [view, setView] = useState<'list' | 'dashboard'>('list');
@@ -31,6 +32,14 @@ export default function Home() {
       setFilteredBooks(storedBooks);
     };
     loadBooks();
+
+    // Check for genre filter in URL params
+    const params = new URLSearchParams(window.location.search);
+    const genreParam = params.get('genreFilter');
+    if (genreParam) {
+      setGenreFilter(decodeURIComponent(genreParam));
+      setView('list');
+    }
   }, []);
 
   useEffect(() => {
@@ -60,6 +69,11 @@ export default function Home() {
       }
     }
 
+    // Apply genre filter
+    if (genreFilter !== 'all') {
+      filtered = filtered.filter(b => b.genres && b.genres.includes(genreFilter));
+    }
+
     // Apply search filter
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase().trim();
@@ -70,7 +84,7 @@ export default function Home() {
     }
 
     setFilteredBooks(filtered);
-  }, [statusFilter, formatFilter, ratingFilter, searchQuery, books]);
+  }, [statusFilter, formatFilter, ratingFilter, genreFilter, searchQuery, books]);
 
   const handleImport = async (files: File[]) => {
     setLoading(true);
@@ -229,42 +243,63 @@ export default function Home() {
               bookCount={filteredBooks.length}
               displayMode={displayMode}
               onDisplayModeChange={setDisplayMode}
+              genreFilter={genreFilter}
+              onClearGenreFilter={() => setGenreFilter('all')}
+              dashboardButton={
+                <button
+                  onClick={() => {
+                    setView('dashboard');
+                    setShowAddForm(false);
+                  }}
+                  style={{
+                    backgroundColor: '#667eea',
+                    color: 'white',
+                    padding: '0.75rem 1.5rem',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    fontSize: '0.95rem',
+                    fontWeight: '500',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  📊 Dashboard
+                </button>
+              }
+              menuButton={
+                <Menu 
+                  onImport={handleImport} 
+                  loading={loading}
+                  onRemoveDuplicates={handleRemoveDuplicates}
+                  onAddBook={() => setShowAddForm(!showAddForm)}
+                />
+              }
             />
           ) : (
-            <div style={{ flex: 1 }} />
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#333', margin: 0 }}>
+              📊 Reading Dashboard
+            </h2>
           )}
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            {view === 'list' && (
-              <button
-                onClick={() => setShowAddForm(!showAddForm)}
-                style={{
-                  backgroundColor: '#667eea',
-                  color: 'white',
-                  padding: '0.75rem 1.5rem',
-                }}
-              >
-                {showAddForm ? 'Cancel' : '+ Add Book'}
-              </button>
-            )}
+          {view !== 'list' && (
             <button
               onClick={() => {
-                setView(view === 'list' ? 'dashboard' : 'list');
+                setView('list');
                 setShowAddForm(false);
               }}
               style={{
-                backgroundColor: view === 'dashboard' ? '#4caf50' : '#667eea',
+                backgroundColor: '#667eea',
                 color: 'white',
                 padding: '0.75rem 1.5rem',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '0.95rem',
+                fontWeight: '500',
               }}
             >
-              {view === 'list' ? '📊 Dashboard' : '📚 Book List'}
+              📚 Book List
             </button>
-            <Menu 
-              onImport={handleImport} 
-              loading={loading}
-              onRemoveDuplicates={handleRemoveDuplicates}
-            />
-          </div>
+          )}
         </div>
 
         {view === 'list' ? (
@@ -291,6 +326,14 @@ export default function Home() {
                 setStatusFilter('all');
                 setFormatFilter('all');
                 setRatingFilter('all');
+                setGenreFilter('all');
+              }}
+              onFilterByGenre={(genre) => {
+                setGenreFilter(genre);
+                setStatusFilter('all');
+                setFormatFilter('all');
+                setRatingFilter('all');
+                setSearchQuery('');
               }}
               displayMode={displayMode}
             />
@@ -302,6 +345,7 @@ export default function Home() {
               setStatusFilter(status);
               setFormatFilter('all'); // Clear format filter when filtering by status
               setRatingFilter('all'); // Clear rating filter
+              setGenreFilter('all'); // Clear genre filter
               setSearchQuery(''); // Clear search
               setView('list');
             }}
@@ -309,6 +353,7 @@ export default function Home() {
               setFormatFilter(format);
               setStatusFilter('all'); // Clear status filter when filtering by format
               setRatingFilter('all'); // Clear rating filter
+              setGenreFilter('all'); // Clear genre filter
               setSearchQuery(''); // Clear search
               setView('list');
             }}
@@ -316,6 +361,15 @@ export default function Home() {
               setRatingFilter(rating);
               setStatusFilter('all'); // Clear status filter when filtering by rating
               setFormatFilter('all'); // Clear format filter
+              setGenreFilter('all'); // Clear genre filter
+              setSearchQuery(''); // Clear search
+              setView('list');
+            }}
+            onFilterByGenre={(genre) => {
+              setGenreFilter(genre);
+              setStatusFilter('all'); // Clear status filter when filtering by genre
+              setFormatFilter('all'); // Clear format filter
+              setRatingFilter('all'); // Clear rating filter
               setSearchQuery(''); // Clear search
               setView('list');
             }}
@@ -324,6 +378,7 @@ export default function Home() {
               setStatusFilter('all');
               setFormatFilter('all');
               setRatingFilter('all');
+              setGenreFilter('all');
               setView('list');
             }}
             onSwitchToList={() => setView('list')}
