@@ -10,10 +10,11 @@ interface DashboardProps {
   onFilterByAuthor?: (author: string) => void;
   onFilterByRating?: (rating: number | 'all') => void; // -1 = all rated, 0 = unrated, 1-5 = specific rating, 'all' = no filter
   onFilterByGenre?: (genre: string) => void;
+  onFilterByYear?: (year: number) => void;
   onSwitchToList?: () => void;
 }
 
-export default function Dashboard({ books, onFilterByStatus, onFilterByFormat, onFilterByAuthor, onFilterByRating, onFilterByGenre, onSwitchToList }: DashboardProps) {
+export default function Dashboard({ books, onFilterByStatus, onFilterByFormat, onFilterByAuthor, onFilterByRating, onFilterByGenre, onFilterByYear, onSwitchToList }: DashboardProps) {
   const stats = calculateReadingStats(books);
 
   const StatCard = ({ 
@@ -831,7 +832,30 @@ export default function Dashboard({ books, onFilterByStatus, onFilterByFormat, o
                 const height = (item.count / maxYearCount) * 100;
                 const isCurrentYear = item.year === new Date().getFullYear();
                 return (
-                  <div key={item.year} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '0 1 120px', height: '100%', justifyContent: 'flex-end' }}>
+                  <div
+                    key={item.year}
+                    onClick={() => {
+                      if (item.count > 0 && onFilterByYear) {
+                        onFilterByYear(item.year);
+                      }
+                    }}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      flex: '0 1 120px',
+                      height: '100%',
+                      justifyContent: 'flex-end',
+                      cursor: item.count > 0 && onFilterByYear ? 'pointer' : 'default',
+                      transition: 'opacity 0.2s',
+                    }}
+                    onMouseEnter={item.count > 0 && onFilterByYear ? (e) => {
+                      e.currentTarget.style.opacity = '0.75';
+                    } : undefined}
+                    onMouseLeave={item.count > 0 && onFilterByYear ? (e) => {
+                      e.currentTarget.style.opacity = '1';
+                    } : undefined}
+                  >
                     {item.count > 0 && (
                       <div style={{
                         fontSize: '1rem',

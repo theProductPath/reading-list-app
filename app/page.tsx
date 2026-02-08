@@ -19,6 +19,7 @@ export default function Home() {
   const [formatFilter, setFormatFilter] = useState<BookFormat | 'all'>('all');
   const [ratingFilter, setRatingFilter] = useState<number | 'all'>('all');
   const [genreFilter, setGenreFilter] = useState<string | 'all'>('all');
+  const [yearFilter, setYearFilter] = useState<number | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [view, setView] = useState<'list' | 'dashboard'>('list');
@@ -74,6 +75,14 @@ export default function Home() {
       filtered = filtered.filter(b => b.genres && b.genres.includes(genreFilter));
     }
 
+    // Apply year filter (books finished in that year)
+    if (yearFilter !== 'all') {
+      filtered = filtered.filter(b => {
+        if (!b.dateFinished) return false;
+        return new Date(b.dateFinished).getFullYear() === yearFilter;
+      });
+    }
+
     // Apply search filter
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase().trim();
@@ -84,7 +93,7 @@ export default function Home() {
     }
 
     setFilteredBooks(filtered);
-  }, [statusFilter, formatFilter, ratingFilter, genreFilter, searchQuery, books]);
+  }, [statusFilter, formatFilter, ratingFilter, genreFilter, yearFilter, searchQuery, books]);
 
   const handleImport = async (files: File[]) => {
     setLoading(true);
@@ -327,12 +336,14 @@ export default function Home() {
                 setFormatFilter('all');
                 setRatingFilter('all');
                 setGenreFilter('all');
+                setYearFilter('all');
               }}
               onFilterByGenre={(genre) => {
                 setGenreFilter(genre);
                 setStatusFilter('all');
                 setFormatFilter('all');
                 setRatingFilter('all');
+                setYearFilter('all');
                 setSearchQuery('');
               }}
               displayMode={displayMode}
@@ -343,42 +354,56 @@ export default function Home() {
             books={books}
             onFilterByStatus={(status) => {
               setStatusFilter(status);
-              setFormatFilter('all'); // Clear format filter when filtering by status
-              setRatingFilter('all'); // Clear rating filter
-              setGenreFilter('all'); // Clear genre filter
-              setSearchQuery(''); // Clear search
+              setFormatFilter('all');
+              setRatingFilter('all');
+              setGenreFilter('all');
+              setYearFilter('all');
+              setSearchQuery('');
               setView('list');
             }}
             onFilterByFormat={(format) => {
               setFormatFilter(format);
-              setStatusFilter('all'); // Clear status filter when filtering by format
-              setRatingFilter('all'); // Clear rating filter
-              setGenreFilter('all'); // Clear genre filter
-              setSearchQuery(''); // Clear search
+              setStatusFilter('all');
+              setRatingFilter('all');
+              setGenreFilter('all');
+              setYearFilter('all');
+              setSearchQuery('');
               setView('list');
             }}
             onFilterByRating={(rating) => {
               setRatingFilter(rating);
-              setStatusFilter('all'); // Clear status filter when filtering by rating
-              setFormatFilter('all'); // Clear format filter
-              setGenreFilter('all'); // Clear genre filter
-              setSearchQuery(''); // Clear search
+              setStatusFilter('all');
+              setFormatFilter('all');
+              setGenreFilter('all');
+              setYearFilter('all');
+              setSearchQuery('');
               setView('list');
             }}
             onFilterByGenre={(genre) => {
               setGenreFilter(genre);
-              setStatusFilter('all'); // Clear status filter when filtering by genre
-              setFormatFilter('all'); // Clear format filter
-              setRatingFilter('all'); // Clear rating filter
-              setSearchQuery(''); // Clear search
+              setStatusFilter('all');
+              setFormatFilter('all');
+              setRatingFilter('all');
+              setYearFilter('all');
+              setSearchQuery('');
               setView('list');
             }}
             onFilterByAuthor={(author) => {
-              setSearchQuery(author); // Use search to filter by author
+              setSearchQuery(author);
               setStatusFilter('all');
               setFormatFilter('all');
               setRatingFilter('all');
               setGenreFilter('all');
+              setYearFilter('all');
+              setView('list');
+            }}
+            onFilterByYear={(year) => {
+              setStatusFilter('finished');
+              setFormatFilter('all');
+              setRatingFilter('all');
+              setGenreFilter('all');
+              setSearchQuery('');
+              setYearFilter(year);
               setView('list');
             }}
             onSwitchToList={() => setView('list')}
