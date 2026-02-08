@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Book, ReadingStatus } from '@/types/book';
+import { Book, ReadingStatus, BookFormat } from '@/types/book';
 import { getBookById, updateBook, deleteBook } from '@/lib/storage';
 
 const statusLabels: Record<ReadingStatus, string> = {
@@ -24,6 +24,7 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
+  const [editingDateFinished, setEditingDateFinished] = useState(false);
 
   useEffect(() => {
     const loadBook = async () => {
@@ -52,6 +53,20 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
     const newRating = book.rating === rating ? undefined : rating;
     await updateBook(book.id, { rating: newRating });
     setBook({ ...book, rating: newRating });
+  };
+
+  const handleDateFinishedChange = async (dateStr: string) => {
+    if (!book) return;
+    const dateFinished = dateStr ? new Date(dateStr + 'T12:00:00').toISOString() : undefined;
+    await updateBook(book.id, { dateFinished });
+    setBook({ ...book, dateFinished });
+    setEditingDateFinished(false);
+  };
+
+  const handleFormatChange = async (format: BookFormat) => {
+    if (!book) return;
+    await updateBook(book.id, { format });
+    setBook({ ...book, format });
   };
 
   const handleDelete = async () => {
@@ -180,23 +195,39 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
                 by {book.author}
               </p>
 
-              {book.format && book.format !== 'unknown' && (
-                <span style={{
-                  display: 'inline-block',
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{
+                  display: 'block',
                   fontSize: '0.85rem',
-                  padding: '0.25rem 0.75rem',
-                  borderRadius: '4px',
-                  backgroundColor: book.format === 'book' ? '#f5e6d3' :
-                                 book.format === 'ebook' ? '#e3f2fd' : '#f3e5f5',
-                  color: book.format === 'book' ? '#8b4513' :
-                         book.format === 'ebook' ? '#1976d2' : '#7b1fa2',
+                  color: '#666',
+                  marginBottom: '0.5rem',
                   fontWeight: '500',
-                  marginBottom: '1rem',
                 }}>
-                  {book.format === 'book' ? '📖 Physical Book' :
-                   book.format === 'ebook' ? '📱 eBook' : '🎧 Audiobook'}
-                </span>
-              )}
+                  Format
+                </label>
+                <select
+                  value={book.format || 'unknown'}
+                  onChange={(e) => handleFormatChange(e.target.value as BookFormat)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: '2px solid ' + (
+                      book.format === 'book' ? '#8b4513' :
+                      book.format === 'ebook' ? '#1976d2' :
+                      book.format === 'audiobook' ? '#7b1fa2' : '#9e9e9e'
+                    ),
+                    backgroundColor: 'white',
+                    color: '#333',
+                    fontSize: '0.95rem',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <option value="book">📖 Physical Book</option>
+                  <option value="ebook">📱 eBook</option>
+                  <option value="audiobook">🎧 Audiobook</option>
+                  <option value="unknown">❓ Unknown</option>
+                </select>
+              </div>
 
               <div style={{ marginBottom: '1rem' }}>
                 <label style={{
@@ -348,14 +379,73 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
                   </div>
                 </div>
               )}
-              {book.dateFinished && (
-                <div>
-                  <div style={{ fontSize: '0.8rem', color: '#999', marginBottom: '0.25rem' }}>Finished Reading</div>
-                  <div style={{ fontSize: '0.95rem', color: '#333' }}>
-                    {new Date(book.dateFinished).toLocaleDateString()}
+              <div>
+                <div style={{ fontSize: '0.8rem', color: '#999', marginBottom: '0.25rem' }}>Finished Reading</div>
+                {editingDateFinished ? (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="date"
+                      defaultValue={book.dateFinished ? new Date(book.dateFinished).toISOString().split('T')[0] : ''}
+                      onChange={(e) => handleDateFinishedChange(e.target.value)}
+                      style={{
+                        padding: '0.35rem 0.5rem',
+                        borderRadius: '6px',
+                        border: '1px solid #ccc',
+                        fontSize: '0.9rem',
+                        color: '#333',
+                      }}
+                    />
+                    <button
+                      onClick={() => setEditingDateFinished(false)}
+                      style={{
+                        padding: '0.25rem 0.5rem',
+                        backgroundColor: 'transparent',
+                        border: '1px solid #ccc',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '0.8rem',
+                        color: '#666',
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    {book.dateFinished && (
+                      <button
+                        onClick={() => handleDateFinishedChange('')}
+                        style={{
+                          padding: '0.25rem 0.5rem',
+                          backgroundColor: 'transparent',
+                          border: '1px solid #f44336',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                          fontSize: '0.8rem',
+                          color: '#f44336',
+                        }}
+                      >
+                        Clear
+                      </button>
+                    )}
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div
+                    onClick={() => setEditingDateFinished(true)}
+                    style={{
+                      fontSize: '0.95rem',
+                      color: book.dateFinished ? '#333' : '#999',
+                      cursor: 'pointer',
+                      padding: '0.25rem 0.5rem',
+                      borderRadius: '4px',
+                      border: '1px dashed #ccc',
+                      display: 'inline-block',
+                    }}
+                    title="Click to edit"
+                  >
+                    {book.dateFinished
+                      ? new Date(book.dateFinished).toLocaleDateString()
+                      : 'Set finish date'}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

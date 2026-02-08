@@ -18,6 +18,7 @@ export interface ReadingStats {
   topAuthors: Array<{ author: string; count: number }>;
   topGenres: Array<{ genre: string; count: number }>;
   readingTimeline: Array<{ month: string; count: number }>;
+  booksFinishedByYear: Array<{ year: number; count: number }>;
   recentFinishes: Book[];
 }
 
@@ -56,6 +57,7 @@ export function calculateReadingStats(books: Book[]): ReadingStats {
     topAuthors: [],
     topGenres: [],
     readingTimeline: [],
+    booksFinishedByYear: [],
     recentFinishes: [],
   };
 
@@ -139,6 +141,23 @@ export function calculateReadingStats(books: Book[]): ReadingStats {
       }
     }
   });
+
+  // Books finished by year (current year and 3 prior years)
+  const yearCounts = new Map<number, number>();
+  for (let y = currentYear - 3; y <= currentYear; y++) {
+    yearCounts.set(y, 0);
+  }
+  books.forEach(book => {
+    if (book.dateFinished) {
+      const year = new Date(book.dateFinished).getFullYear();
+      if (yearCounts.has(year)) {
+        yearCounts.set(year, (yearCounts.get(year) || 0) + 1);
+      }
+    }
+  });
+  stats.booksFinishedByYear = Array.from(yearCounts.entries())
+    .sort((a, b) => a[0] - b[0])
+    .map(([year, count]) => ({ year, count }));
 
   // Top authors
   const authorCounts = new Map<string, number>();

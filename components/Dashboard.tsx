@@ -812,6 +812,61 @@ export default function Dashboard({ books, onFilterByStatus, onFilterByFormat, o
         </div>
       )}
 
+      {/* Books Finished by Year */}
+      {stats.booksFinishedByYear.some(y => y.count > 0) && (
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '12px',
+          padding: '1.5rem',
+          marginBottom: '2rem',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        }}>
+          <h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '1rem', color: '#333' }}>
+            Books Finished by Year
+          </h3>
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1.5rem', height: '200px', justifyContent: 'center' }}>
+            {(() => {
+              const maxYearCount = Math.max(...stats.booksFinishedByYear.map(y => y.count), 1);
+              return stats.booksFinishedByYear.map((item) => {
+                const height = (item.count / maxYearCount) * 100;
+                const isCurrentYear = item.year === new Date().getFullYear();
+                return (
+                  <div key={item.year} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '0 1 120px', height: '100%', justifyContent: 'flex-end' }}>
+                    {item.count > 0 && (
+                      <div style={{
+                        fontSize: '1rem',
+                        fontWeight: 'bold',
+                        color: isCurrentYear ? '#667eea' : '#999',
+                        marginBottom: '0.25rem',
+                      }}>
+                        {item.count}
+                      </div>
+                    )}
+                    <div style={{
+                      width: '100%',
+                      maxWidth: '80px',
+                      backgroundColor: isCurrentYear ? '#667eea' : '#c5cae9',
+                      height: `${height}%`,
+                      minHeight: item.count > 0 ? '4px' : '0',
+                      borderRadius: '6px 6px 0 0',
+                      transition: 'height 0.3s',
+                    }} />
+                    <div style={{
+                      fontSize: '0.9rem',
+                      color: isCurrentYear ? '#667eea' : '#666',
+                      fontWeight: isCurrentYear ? '700' : '500',
+                      marginTop: '0.5rem',
+                    }}>
+                      {item.year}
+                    </div>
+                  </div>
+                );
+              });
+            })()}
+          </div>
+        </div>
+      )}
+
       {/* Top Authors & Recent Finishes Row */}
       <div style={{ display: 'flex', gap: '2rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
         {/* Top Authors */}
